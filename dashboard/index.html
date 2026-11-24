@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Token Radar — pre-token protocols ranked by implied value</title>
+<link rel="stylesheet" href="app.css">
+</head>
+<body>
+<header class="mast">
+  <div class="wrap mast-in">
+    <div>
+      <p class="eyebrow">DefiLlama snapshot &middot; token launch radar</p>
+      <h1>Token Radar</h1>
+      <p class="tag">Every protocol with no token on record, ranked by what its token
+      would be worth if it launched today.</p>
+    </div>
+    <dl class="stats" id="stats"></dl>
+  </div>
+</header>
+<main class="wrap">
+  <section class="panel" aria-label="Filters">
+    <div class="controls">
+      <label>Search
+        <input type="search" id="q" placeholder="Name, slug, chain…" autocomplete="off">
+      </label>
+      <label>Category
+        <select id="category"><option value="all">All categories</option></select>
+      </label>
+      <label>Chain
+        <select id="chain"><option value="all">All chains</option></select>
+      </label>
+      <label>Status
+        <select id="status">
+          <option value="pre">Pre-token (ranked)</option>
+          <option value="watch">Watchlist only</option>
+          <option value="live">Already has a token</option>
+        </select>
+      </label>
+      <label>Sort by
+        <select id="sort">
+          <option value="implied">Implied value</option>
+          <option value="tvl">TVL</option>
+          <option value="growth">7-day growth</option>
+          <option value="age">Age with no token</option>
+          <option value="name">Name A–Z</option>
+        </select>
+      </label>
+      <button type="button" id="clear" class="ghost">Clear filters</button>
+    </div>
+    <p class="count" id="count" role="status"></p>
+  </section>
+
+  <section class="panel" aria-label="Ranked board">
+    <table id="board">
+      <thead><tr>
+        <th scope="col">Rank</th><th scope="col">Protocol</th><th scope="col">TVL</th>
+        <th scope="col">7d</th><th scope="col">Age</th><th scope="col">Implied value</th><th scope="col">Token</th>
+      </tr></thead>
+      <tbody id="rows"></tbody>
+    </table>
+    <p class="empty" id="empty" hidden>No protocol matches. Clear the search or pick another filter.</p>
+  </section>
+
+  <section class="panel method" aria-label="Method">
+    <h2>How the number is built</h2>
+    <p class="formula" id="formula"></p>
+    <p>TVL, 7-day growth, listing date and chains all come from the snapshot.
+    The category multiple is the sector's launch value per TVL dollar: RWA 0.35,
+    lending and derivatives 0.30, DEXs 0.28, bridges 0.18, everything else 0.22.
+    Growth is clamped to &minus;50%…+100% and counts at 60% weight. Age is days
+    since DefiLlama first listed the protocol, capped at 3 years; an unknown
+    listing date counts as 365 days. Each extra chain adds 3%, up to 12%.</p>
+    <p><strong>Watchlist means “DefiLlama records no token” — not “definitely no
+    token”.</strong> A protocol on the list may still have a token its DefiLlama
+    record does not carry. Implied value is this radar's own estimate, never a
+    price and never a promise that a token launches.</p>
+    <p class="src" id="src"></p>
+  </section>
+</main>
+
+<dialog id="detail" class="detail" aria-labelledby="detail-title">
+  <div id="detail-body"></div>
+</dialog>
+
+<script src="../data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
